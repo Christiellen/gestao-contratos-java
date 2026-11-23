@@ -1,0 +1,13 @@
+# Java
+backend/target/
+*.class
+.idea/
+*.iml
+
+# Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+
+.env

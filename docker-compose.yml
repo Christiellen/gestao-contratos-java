@@ -1,0 +1,50 @@
+# Ambiente completo: banco, API, front-end e caixa de e-mail de teste.
+# Uso: docker compose up --build
+#   http://localhost:8080       sistema (login admin@exemplo.gov.br / password)
+#   http://localhost:8081/swagger-ui.html  documentação da API
+#   http://localhost:8025       e-mails de aviso de vencimento (Mailpit)
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: contratos
+      POSTGRES_USER: contratos
+      POSTGRES_PASSWORD: contratos
+    volumes:
+      - dados:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contratos"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: ./backend
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/contratos
+      DB_USERNAME: contratos
+      DB_PASSWORD: contratos
+      FRONTEND_URL: http://localhost:8080
+      SEED_DEMO: "true"
+      SPRING_MAIL_HOST: mailpit
+      SPRING_MAIL_PORT: 1025
+      MAIL_FROM_ADDRESS: avisos@exemplo.gov.br
+    ports:
+      - "8081:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on: [api]
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8025:8025"
+
+volumes:
+  dados:

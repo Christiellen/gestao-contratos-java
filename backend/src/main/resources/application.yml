@@ -1,0 +1,52 @@
+server:
+  port: 8080
+  # Respeita X-Forwarded-For do nginx (o limite de tentativas de login usa o IP do cliente).
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: gestao-contratos
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/contratos}
+    username: ${DB_USERNAME:contratos}
+    password: ${DB_PASSWORD:contratos}
+  jpa:
+    open-in-view: false
+    hibernate:
+      # O esquema é responsabilidade do Flyway (db/migration).
+      ddl-auto: none
+  flyway:
+    enabled: true
+  jackson:
+    # Mesmo formato de JSON da API em PHP (valor_global, data_fim...), para o front-end não mudar.
+    property-naming-strategy: SNAKE_CASE
+    time-zone: America/Sao_Paulo
+    deserialization:
+      fail-on-unknown-properties: false
+  # E-mail: defina SPRING_MAIL_HOST (e SPRING_MAIL_PORT) para ligar o envio dos avisos.
+
+gestao-contratos:
+  fuso-horario: America/Sao_Paulo
+  frontend-url: ${FRONTEND_URL:http://localhost:8080}
+  token:
+    validade: 8h
+  login:
+    tentativas-por-minuto: 5
+  avisos:
+    remetente: ${MAIL_FROM_ADDRESS:avisos@exemplo.gov.br}
+    agendamento-habilitado: ${AGENDAMENTO_HABILITADO:true}
+  dados-demonstracao: ${SEED_DEMO:false}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

@@ -1,0 +1,157 @@
+:root {
+  --azul: #1f3864;
+  --azul-claro: #deeaf6;
+  --borda: #d9dee5;
+  --texto: #1e2733;
+  --texto-suave: #5b6675;
+  --fundo: #f5f7fa;
+  --verde: #1e7b4a;
+  --amarelo: #a86400;
+  --vermelho: #b42318;
+  --raio: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--texto);
+  background: var(--fundo);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a { color: var(--azul); }
+
+h1 { font-size: 1.5rem; margin: 0 0 1rem; color: var(--azul); }
+h2 { font-size: 1.15rem; margin: 1.5rem 0 0.75rem; color: var(--azul); }
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.75rem 2rem;
+  background: var(--azul);
+  color: #fff;
+
+  &__marca { font-weight: 700; font-size: 1.1rem; }
+  &__nav { display: flex; gap: 1rem; flex: 1; }
+  &__nav a { color: #cfe0f5; text-decoration: none; padding: 0.25rem 0.5rem; border-radius: 4px; }
+  &__nav a.ativo, &__nav a:hover { color: #fff; background: rgba(255, 255, 255, 0.12); }
+  &__usuario { display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; }
+}
+
+.conteudo { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+.cartao {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 1.25rem 1.5rem;
+}
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  h1 { margin: 0; }
+}
+
+.botao {
+  display: inline-block;
+  border: 1px solid var(--azul);
+  background: var(--azul);
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+  &--secundario { background: #fff; color: var(--azul); }
+  &--claro { background: transparent; border-color: #cfe0f5; color: #fff; padding: 0.3rem 0.8rem; }
+  &--perigo { background: #fff; color: var(--vermelho); border-color: var(--vermelho); }
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+
+  th, td { text-align: left; padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--borda); vertical-align: top; }
+  th { background: var(--azul-claro); color: var(--azul); font-weight: 600; font-size: 0.85rem; }
+  tbody tr:hover { background: #fafbfd; }
+  .numero { white-space: nowrap; }
+  .direita { text-align: right; }
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &--vigente { background: #e3f4ea; color: var(--verde); }
+  &--a_vencer { background: #fff2dc; color: var(--amarelo); }
+  &--vencido { background: #fde7e6; color: var(--vermelho); }
+}
+
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+
+  .largo { grid-column: 1 / -1; }
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  label { font-weight: 600; font-size: 0.9rem; }
+  input, select, textarea {
+    font: inherit;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background: #fff;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--azul-claro); border-color: var(--azul); }
+  .erro { color: var(--vermelho); font-size: 0.85rem; }
+  &.invalido input, &.invalido select { border-color: var(--vermelho); }
+}
+
+.alerta {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  &--erro { background: #fde7e6; color: var(--vermelho); }
+  &--sucesso { background: #e3f4ea; color: var(--verde); }
+}
+
+.acoes { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+.suave { color: var(--texto-suave); }
+.vazio { padding: 2rem; text-align: center; color: var(--texto-suave); }
+
+.fase {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--azul-claro);
+  color: var(--azul);
+
+  &--em_preparacao, &--em_execucao { background: #eef0f3; color: var(--texto-suave); }
+  &--fiscalizacao_tecnica, &--fiscalizacao_administrativa, &--recebimento_definitivo { background: #fff2dc; color: var(--amarelo); }
+  &--encerrada, &--pagamento_autorizado { background: #e3f4ea; color: var(--verde); }
+  &--cancelada { background: #fde7e6; color: var(--vermelho); }
+}
